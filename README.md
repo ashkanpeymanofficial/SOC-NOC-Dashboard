@@ -5,11 +5,11 @@
 
 **A Modern, Real-Time Security Operations Center (SOC) & Network Operations Center (NOC) Dashboard**
 
-[![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?style=for-the-badge&logo=dotnet)](https://dotnet.microsoft.com/)
-[![ASP.NET Core](https://img.shields.io/badge/ASP.NET_Core-Web_API-blue?style=for-the-badge&logo=dotnet)](https://dotnet.microsoft.com/apps/aspnet)
-[![SignalR](https://img.shields.io/badge/SignalR-RealTime-red?style=for-the-badge)](https://dotnet.microsoft.com/apps/aspnet/signalr)
-[![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?style=for-the-badge&logo=sqlite)](https://www.sqlite.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![.NET](https://badgen.net/badge/.NET/8.0/512BD4?icon=dotnet)](https://dotnet.microsoft.com/)
+[![ASP.NET Core](https://badgen.net/badge/ASP.NET%20Core/Web%20API/512BD4)](https://dotnet.microsoft.com/apps/aspnet)
+[![SignalR](https://badgen.net/badge/SignalR/RealTime/red)](https://dotnet.microsoft.com/apps/aspnet/signalr)
+[![SQLite](https://badgen.net/badge/SQLite/Database/003B57)](https://www.sqlite.org/)
+[![License: MIT](https://badgen.net/badge/License/MIT/yellow)](https://opensource.org/licenses/MIT)
 
 *Built with C#, ASP.NET Core, SignalR, and Vanilla JavaScript.*
 
