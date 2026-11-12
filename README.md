@@ -125,8 +125,7 @@ To use the real file scanner, open `appsettings.json` and replace `"YOUR_API_KEY
 > ![Dashboard](https://github.com/ashkanpeymanofficial/SOC-NOC-Dashboard/blob/main/dashbord.png?raw=true)
 > 
 > **Network Scanner**
-> ![Network Scanner](https://via.placeholder.com/800x400/050810/00ff88?text=Network+Scanner+NOC)
-
+> ![Network Scanner](https://github.com/ashkanpeymanofficial/SOC-NOC-Dashboard/blob/main/network.png?raw=true)
 ---
 
 ## ⚠️ Disclaimer
