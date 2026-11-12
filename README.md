@@ -4,6 +4,7 @@
 # 🛡️ SOC Center
 
 **A Modern, Real-Time Security Operations Center (SOC) & Network Operations Center (NOC) Dashboard**
+> 🌐 Language: The user interface is natively built in Persian (Farsi) with full RTL (Right-to-Left) support, styled with the beautiful *Vazirmatn* font.
 
 <br>
 
