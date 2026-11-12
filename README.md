@@ -7,14 +7,12 @@
 
 <br>
 
-`text
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  [ CORE ENGINE ]      [ REAL-TIME ]       [ DATABASE ]      [ SECURITY ]    │
-│                                                                             │
-│   ⚙️ C# 12 / .NET 8    ⚡ SignalR           🗄️ SQLite          🔐 JWT Auth     │
-│   🚀 ASP.NET Core      📡 WebSockets        📦 EF Core         🛡️ BCrypt       │
-│   🎨 Vanilla JS        📊 Chart.js          📝 Serilog         👥 RBAC         │
-└─────────────────────────────────────────────────────────────────────────────┘
+| 🛠️ Backend | 🚨 Real-Time | 🗄️ Database | 🎨 Frontend | 🔐 Security |
+| :---: | :---: | :---: | :---: | :---: |
+| C# 12 / .NET 8 | SignalR / WebSockets | SQLite / EF Core | HTML5 / CSS3 | JWT / BCrypt |
+| ASP.NET Core | Live Audio API | Structured Logging | Vanilla JS / Chart.js | Role-Based Access |
+
+<br>
 
 *Built with C#, ASP.NET Core, SignalR, and Vanilla JavaScript.*
 
