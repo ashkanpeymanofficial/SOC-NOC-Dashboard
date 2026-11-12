@@ -5,11 +5,14 @@
 
 **A Modern, Real-Time Security Operations Center (SOC) & Network Operations Center (NOC) Dashboard**
 
-[![.NET](https://badgen.net/badge/.NET/8.0/512BD4?icon=dotnet)](https://dotnet.microsoft.com/)
-[![ASP.NET Core](https://badgen.net/badge/ASP.NET%20Core/Web%20API/512BD4)](https://dotnet.microsoft.com/apps/aspnet)
-[![SignalR](https://badgen.net/badge/SignalR/RealTime/red)](https://dotnet.microsoft.com/apps/aspnet/signalr)
-[![SQLite](https://badgen.net/badge/SQLite/Database/003B57)](https://www.sqlite.org/)
-[![License: MIT](https://badgen.net/badge/License/MIT/yellow)](https://opensource.org/licenses/MIT)
+<br>
+
+| 🛠️ Backend | 🚨 Real-Time | 🗄️ Database | 🎨 Frontend | 🔐 Security |
+| :---: | :---: | :---: | :---: | :---: |
+| C# 12 / .NET 8 | SignalR / WebSockets | SQLite / EF Core | HTML5 / CSS3 | JWT / BCrypt |
+| ASP.NET Core | Live Audio API | Structured Logging | Vanilla JS / Chart.js | Role-Based Access |
+
+<br>
 
 *Built with C#, ASP.NET Core, SignalR, and Vanilla JavaScript.*
 
