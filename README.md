@@ -65,14 +65,66 @@ Whether you are simulating cyber attacks, monitoring live Syslog traffic, scanni
 
 ## 🚀 Quick Start
 
+Follow these steps carefully to run the project on your local machine.
+
 ### Prerequisites
-- [.NET 8.0 SDK](https://dotnet.microsoft.com/download) or later.
-- Visual Studio 2022, VS Code, or any C# IDE.
-- A VirusTotal API Key (Optional, for the real file scanner).
+- [.NET 8.0 SDK](https://dotnet.microsoft.com/download) installed on your system.
+- Visual Studio 2022, VS Code, or a command-line terminal.
+- *(Optional)* A free [VirusTotal API Key](https://www.virustotal.com) for real file scanning.
 
-### Installation
+### Step-by-Step Installation
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/SOC-Center.git
-   cd SOC-Center/SocCenter
+**1. Clone the repository:**
+```bash
+git clone https://github.com/YOUR_USERNAME/SOC-NOC-Dashboard.git
+cd SOC-NOC-Dashboard/SocCenter
+2. Restore NuGet packages:
+Navigate to the project folder in your terminal and run:
+
+bash
+dotnet restore
+3. Database Initialization (Automatic):
+You don't need to create a database manually. On the first run, the application will automatically generate a fresh SQLite database (soc.db) and create the default administrator account.
+
+4. Run the Application (Crucial Step):
+
+⚠️ Important: You must run the application with Administrator privileges. This is required because:
+
+The Syslog listener needs to bind to UDP port 514.
+
+The Network Scanner needs permissions to execute arp commands and perform Port Scans.
+
+If using Visual Studio:
+Right-click on Visual Studio -> Select "Run as administrator" -> Open the project -> Press F5 or click the green Run button.
+
+If using VS Code or Terminal:
+Open your terminal as Administrator (Command Prompt/PowerShell), navigate to the SocCenter folder, and run:
+
+bash
+dotnet run
+5. Access the Dashboard:
+Open your web browser and go to the URL shown in your terminal (usually https://localhost:7198 or similar).
+
+👤 Default Username: admin
+
+🔑 Default Password: Admin@123
+
+6. Optional: VirusTotal Setup
+To use the real file scanner, open appsettings.json and replace "YOUR_API_KEY_HERE" with your actual VirusTotal API key. (Note: The file scanner has a built-in Demo mode that works perfectly without an API key).
+
+🖼️ Screenshots
+(Add your screenshots here to make the repository shine!)
+
+Dashboard View
+https://via.placeholder.com/800x400/050810/00d4ff?text=SOC+Dashboard+Live+View
+
+Network Scanner
+https://via.placeholder.com/800x400/050810/00ff88?text=Network+Scanner+NOC
+
+⚠️ Disclaimer
+This project is created for educational and portfolio purposes. The "Attack Simulator" does not perform real attacks; it only generates simulated log events via SignalR. Always ensure you have legal authorization before scanning networks or ports that you do not own.
+
+📄 License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+<div align="center"> <i>Built with ❤️ for Cyber Security Enthusiasts</i> </div> ```
