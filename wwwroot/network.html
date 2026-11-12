@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>اسکنر شبکه | SOC Center</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        if (!localStorage.getItem('soc_token')) window.location.href = '/login.html';
+    </script>
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        <h1>SOC CENTER</h1>
+    </div>
+    <div class="header-status">
+        <a href="/index.html" class="sound-btn" style="text-decoration:none; padding: 8px 16px; font-family: 'Vazirmatn', sans-serif; font-size: 13px;">بازگشت به داشبورد</a>
+    </div>
+</header>
+
+<div class="container" style="grid-template-columns: 1fr; max-width: 1200px;">
+    
+    <!-- آمار بالای صفحه -->
+    <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 24px;">
+        <div class="kpi-card" style="--accent: var(--neon-green);">
+            <div class="kpi-label">دستگاه‌های آنلاین</div>
+            <div class="kpi-value" id="totalDevices">0</div>
+        </div>
+        <div class="kpi-card" style="--accent: var(--neon-blue);">
+            <div class="kpi-label">کل پورت‌های باز</div>
+            <div class="kpi-value" id="totalPorts">0</div>
+        </div>
+        <div class="kpi-card" style="--accent: var(--neon-red);">
+            <div class="kpi-label">پورت‌های خطرناک (RDP/SSH)</div>
+            <div class="kpi-value" id="dangerousPorts">0</div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-title" style="justify-content: space-between;">
+            <span>🌐 دستگاه‌های متصل به شبکه</span>
+            <button id="scanBtn" style="
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    padding: 8px 16px; 
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 255, 136, 0.1)); 
+    border: 1px solid rgba(0, 212, 255, 0.3); 
+    border-radius: 10px; 
+    color: var(--neon-blue); 
+    font-family: 'Vazirmatn', sans-serif; 
+    font-size: 13px; 
+    font-weight: 500; 
+    cursor: pointer; 
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.1);
+">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="23 4 23 10 17 10"></polyline>
+        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+    </svg>
+    <span id="scanBtnText">شروع اسکن شبکه</span>
+</button>
+        </div>
+        
+        <div id="loadingBox" style="display: none; text-align: center; padding: 40px; color: var(--neon-blue);">
+            <div style="font-size: 18px; margin-bottom: 10px;">⏳ در حال اسکن شبکه...</div>
+            <div style="font-size: 12px; color: var(--text-muted);">این فرآیند ممکن است تا ۳۰ ثانیه طول بکشد</div>
+        </div>
+
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; text-align: right; font-size: 13px;">
+                <thead>
+                    <tr style="background: rgba(0, 212, 255, 0.05); border-bottom: 1px solid var(--border); color: var(--text-muted);">
+                        <th style="padding: 12px;">آدرس IP</th>
+                        <th style="padding: 12px;">نام دستگاه (Host)</th>
+                        <th style="padding: 12px;">آدرس MAC</th>
+                        <th style="padding: 12px;">پینگ (ms)</th>
+                        <th style="padding: 12px;">پورت‌های باز</th>
+                        <th style="padding: 12px;">وضعیت</th>
+                    </tr>
+                </thead>
+                <tbody id="devicesTable">
+                    <tr><td colspan="6" style="text-align: center; padding: 30px; color: var(--text-muted);">برای شروع، دکمه «شروع اسکن شبکه» را بزنید</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="js/network.js"></script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOC Center | داشبورد زنده</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        // محافظت از صفحه (بررسی لاگین)
+        if (!localStorage.getItem('soc_token')) {
+            window.location.href = '/login.html';
+        }
+    </script>
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        <h1>SOC CENTER</h1>
+    </div>
+    <div class="header-status">
+        <div class="status-badge" id="connectionBadge">
+            <span class="status-dot"></span>
+            <span id="connectionText">در حال اتصال...</span>
+        </div>
+        <div class="clock" id="clock">00:00:00</div>
+        <a href="/network.html" title="اسکن شبکه" style="display: flex; align-items: center; gap: 6px; padding: 8px 14px; background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 10px; color: var(--neon-blue); font-family: 'Vazirmatn', sans-serif; font-size: 12px; text-decoration: none; transition: all 0.3s;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+            اسکن شبکه
+        </a>
+        <button id="usersBtn" title="مدیریت کاربران" style="display: none; align-items: center; gap: 8px; padding: 8px 16px; background: linear-gradient(135deg, rgba(255, 204, 0, 0.1), rgba(255, 51, 85, 0.1)); border: 1px solid rgba(255, 204, 0, 0.3); border-radius: 10px; color: var(--neon-yellow); font-family: 'Vazirmatn', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(255, 204, 0, 0.1);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            مدیریت کاربران
+        </button>
+        <button class="sound-btn" id="scanFileBtn" title="اسکن فایل" style="border-color: rgba(0, 212, 255, 0.4); color: var(--neon-blue); gap: 6px; padding: 8px 14px; font-size: 12px; font-family: 'Vazirmatn', sans-serif;">
+            🦠 اسکن فایل
+        </button>
+        
+        <button class="sound-btn" id="demoBtn" title="شبیه‌سازی حمله" style="border-color: rgba(255, 204, 0, 0.4); color: var(--neon-yellow); gap: 8px; padding: 8px 16px; font-size: 13px; font-family: 'Vazirmatn', sans-serif; font-weight: 500; display: flex; align-items: center; border-radius: 10px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            شبیه‌سازی حمله
+        </button>
+        <button class="sound-btn" id="logoutBtn" title="خروج از حساب" style="border-color: rgba(255, 51, 85, 0.4); color: var(--neon-red); padding: 8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+        </button>
+    </div>
+</header>
+
+<div class="container">
+    <aside>
+        <div class="kpi-grid">
+            <div class="kpi-card" style="--accent: var(--neon-blue);">
+                <div class="kpi-header"><span class="kpi-label">کل رویدادها</span></div>
+                <div class="kpi-value" id="totalEvents">0</div>
+                <div class="kpi-trend">▲ زنده</div>
+            </div>
+            <div class="kpi-card" style="--accent: var(--neon-red);">
+                <div class="kpi-header"><span class="kpi-label">بحرانی</span></div>
+                <div class="kpi-value" id="criticalEvents" style="color: var(--neon-red);">0</div>
+                <div class="kpi-trend" style="color: var(--neon-red);">نیاز به بررسی</div>
+            </div>
+            <div class="kpi-card" style="--accent: var(--neon-yellow);">
+                <div class="kpi-header"><span class="kpi-label">هشدارها</span></div>
+                <div class="kpi-value" id="warningEvents" style="color: var(--neon-yellow);">0</div>
+                <div class="kpi-trend" style="color: var(--neon-yellow);">در حال پایش</div>
+            </div>
+            <div class="kpi-card" style="--accent: var(--neon-green);">
+                <div class="kpi-header"><span class="kpi-label">اطلاعات</span></div>
+                <div class="kpi-value" id="infoEvents" style="color: var(--neon-green);">0</div>
+                <div class="kpi-trend">دریافت شده</div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-title">آخرین هشدارهای بحرانی</div>
+            <div id="alertList">
+                <div class="empty-state">هیچ هشدار بحرانی‌ای نیست</div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <div class="panel">
+            <div class="panel-title">
+                روند رویدادها (۶۰ ثانیه اخیر)
+            </div>
+            <div style="height: 180px;">
+                <canvas id="trendChart"></canvas>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-title">
+                جریان زنده لاگ‌های امنیتی
+                <button id="soundToggle" class="sound-btn" title="صدا فعال">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="filter-bar">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">همه</button>
+                    <button class="filter-btn" data-filter="critical">🔴 بحرانی</button>
+                    <button class="filter-btn" data-filter="warning">🟡 هشدار</button>
+                    <button class="filter-btn" data-filter="info">🔵 اطلاعات</button>
+                </div>
+                <input type="text" id="searchInput" class="search-input" placeholder="جستجو...">
+            </div>
+
+            <div class="log-container" id="logContainer">
+                <div class="empty-state">در انتظار دریافت رویداد از شبکه</div>
+            </div>
+        </div>
+    </main>
+
+    <aside>
+        <div class="panel">
+            <div class="panel-title">توزیع رویدادها</div>
+            <div class="donut-chart">
+                <svg viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" stroke="#1e2b45"/>
+                    <circle cx="50" cy="50" r="40" stroke="var(--neon-red)" stroke-dasharray="0 251" id="donutCritical"/>
+                    <circle cx="50" cy="50" r="40" stroke="var(--neon-yellow)" stroke-dasharray="0 251" id="donutWarning"/>
+                    <circle cx="50" cy="50" r="40" stroke="var(--neon-blue)" stroke-dasharray="0 251" id="donutInfo"/>
+                </svg>
+            </div>
+            <div style="text-align: center; font-size: 12px; color: var(--text-muted); margin-top:10px;">
+                مجموع: <span id="totalForDonut" style="color: var(--neon-blue); font-weight: 700;">0</span>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-title">وضعیت سیستم</div>
+            <div style="font-size: 13px; line-height: 2;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: var(--text-muted);">Syslog:</span>
+                    <span style="color: var(--neon-green);">514 فعال</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: var(--text-muted);">SignalR:</span>
+                    <span id="signalrStatus" style="color: var(--neon-yellow);">در حال بررسی</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: var(--text-muted);">Uptime:</span>
+                    <span id="uptime" style="color: var(--neon-blue);">00:00:00</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: var(--text-muted);">کاربر:</span>
+                    <span id="currentUser" style="color: var(--neon-blue);">---</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+</div>
+
+<script src="js/app.js"></script>
+<!-- مودال اسکن فایل -->
+<div id="scanModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 8, 16, 0.85); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center;">
+    <div class="panel" style="width: 90%; max-width: 500px; position: relative; animation: slideIn 0.3s ease;">
+        <button id="closeModalBtn" style="position: absolute; top: 16px; left: 16px; background: none; border: none; color: var(--neon-red); cursor: pointer; font-size: 20px;">✖</button>
+        <div class="panel-title">🦠 اسکن امنیتی فایل</div>
+        
+        <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px;">
+                <input type="checkbox" id="modalDemoMode" style="accent-color: var(--neon-yellow); width: 16px; height: 16px;" checked>
+                <span style="color: var(--neon-yellow);">حالت دمو (شبیه‌سازی فایل آلوده)</span>
+            </label>
+        </div>
+
+        <div id="modalUploadBox" style="border: 2px dashed var(--border); border-radius: 12px; padding: 30px; text-align: center; cursor: pointer; transition: all 0.3s;">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="1.5" style="margin-bottom: 12px;">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <div style="color: var(--text-primary); margin-bottom: 8px; font-size: 13px;">برای انتخاب فایل کلیک کنید</div>
+            <div style="color: var(--text-muted); font-size: 12px;" id="modalFileName">هیچ فایلی انتخاب نشده</div>
+            <input type="file" id="modalFileInput" style="display: none;">
+        </div>
+        
+        <button id="modalScanBtn" style="
+    margin-top: 20px; 
+    display: none; 
+    width: 100%;
+    padding: 12px; 
+    background: linear-gradient(90deg, var(--neon-blue), var(--neon-green)); 
+    border: none; 
+    border-radius: 10px; 
+    color: #050810; 
+    font-family: 'Vazirmatn', sans-serif; 
+    font-size: 14px; 
+    font-weight: 700; 
+    cursor: pointer; 
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    اسکن فایل
+</button>
+        <div id="modalResultBox" style="margin-top: 16px; display: none;"></div>
+    </div>
+</div>
+<!-- مودال مدیریت کاربران -->
+<div id="usersModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 8, 16, 0.85); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center;">
+    <div class="panel" style="width: 95%; max-width: 900px; max-height: 90vh; overflow-y: auto; position: relative; animation: slideIn 0.3s ease;">
+        <button id="closeUsersModalBtn" style="position: absolute; top: 16px; left: 16px; background: none; border: none; color: var(--neon-red); cursor: pointer; font-size: 20px;">✖</button>
+        
+        <div class="panel-title" style="margin-bottom: 24px;">👥 مدیریت کاربران سیستم</div>
+
+        <!-- فرم ساخت کاربر جدید -->
+        <div style="background: var(--bg-card); border-radius: 12px; padding: 20px; margin-bottom: 24px; border: 1px solid var(--border);">
+            <div style="font-size: 14px; font-weight: 700; margin-bottom: 16px; color: var(--neon-blue);">➕ افزودن کاربر جدید</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 12px; align-items: end;">
+                <div>
+                    <label style="display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">نام کاربری</label>
+                    <input type="text" id="newUsername" class="search-input" style="width: 100%; border-radius: 8px;" placeholder="مثلا: analyst1">
+                </div>
+                <div>
+                    <label style="display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">رمز عبور</label>
+                    <input type="password" id="newPassword" class="search-input" style="width: 100%; border-radius: 8px;" placeholder="حداقل ۸ کاراکتر">
+                </div>
+                <div>
+                    <label style="display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">نقش</label>
+                    <select id="newRole" class="search-input" style="width: 100%; border-radius: 8px; background: var(--bg-card); color: var(--text-primary);">
+                        <option value="Viewer">Viewer (فقط مشاهده)</option>
+                        <option value="Analyst">Analyst (تحلیلگر)</option>
+                        <option value="Admin">Admin (مدیر کل)</option>
+                    </select>
+                </div>
+                <button id="createUserBtn" style="
+    padding: 11px 20px; 
+    background: linear-gradient(135deg, var(--neon-blue), var(--neon-green)); 
+    border: none; 
+    border-radius: 8px; 
+    color: #050810; 
+    font-family: 'Vazirmatn', sans-serif; 
+    font-size: 13px; 
+    font-weight: 700; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 6px;
+    height: 42px;
+    white-space: nowrap;
+">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+    </svg>
+    ساخت کاربر
+</button>
+            </div>
+        </div>
+
+        <!-- جدول کاربران -->
+        <div style="background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); overflow: hidden;">
+            <table style="width: 100%; border-collapse: collapse; text-align: right; font-size: 13px;">
+                <thead>
+                    <tr style="background: rgba(0, 212, 255, 0.05); border-bottom: 1px solid var(--border); color: var(--text-muted);">
+                        <th style="padding: 12px 16px;">نام کاربری</th>
+                        <th style="padding: 12px 16px;">نقش</th>
+                        <th style="padding: 12px 16px;">وضعیت</th>
+                        <th style="padding: 12px 16px;">آخرین ورود</th>
+                        <th style="padding: 12px 16px;">عملیات</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <!-- توسط جاوااسکریپت پر می‌شه -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
