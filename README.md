@@ -5,37 +5,16 @@
 
 **A Modern, Real-Time Security Operations Center (SOC) & Network Operations Center (NOC) Dashboard**
 
-<div align="center">
-  <table style="border-collapse: separate; border-spacing: 12px; width: 100%; max-width: 900px;">
-    <tr>
-      <td align="center" style="background: rgba(0, 212, 255, 0.05); border: 1px solid #00d4ff; border-radius: 10px; padding: 15px; width: 20%; box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);">
-        <div style="font-size: 24px; margin-bottom: 8px;">🛠️</div>
-        <div style="color: #00d4ff; font-weight: bold; font-size: 14px; margin-bottom: 4px; font-family: monospace;">Backend</div>
-        <div style="color: #8b9bb4; font-size: 12px;">C# 12 / .NET 8<br>ASP.NET Core</div>
-      </td>
-      <td align="center" style="background: rgba(255, 51, 85, 0.05); border: 1px solid #ff3355; border-radius: 10px; padding: 15px; width: 20%; box-shadow: 0 0 15px rgba(255, 51, 85, 0.2);">
-        <div style="font-size: 24px; margin-bottom: 8px;">🚨</div>
-        <div style="color: #ff3355; font-weight: bold; font-size: 14px; margin-bottom: 4px; font-family: monospace;">Real-Time</div>
-        <div style="color: #8b9bb4; font-size: 12px;">SignalR<br>WebSockets</div>
-      </td>
-      <td align="center" style="background: rgba(0, 255, 136, 0.05); border: 1px solid #00ff88; border-radius: 10px; padding: 15px; width: 20%; box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);">
-        <div style="font-size: 24px; margin-bottom: 8px;">🗄️</div>
-        <div style="color: #00ff88; font-weight: bold; font-size: 14px; margin-bottom: 4px; font-family: monospace;">Database</div>
-        <div style="color: #8b9bb4; font-size: 12px;">SQLite<br>EF Core</div>
-      </td>
-      <td align="center" style="background: rgba(255, 204, 0, 0.05); border: 1px solid #ffcc00; border-radius: 10px; padding: 15px; width: 20%; box-shadow: 0 0 15px rgba(255, 204, 0, 0.2);">
-        <div style="font-size: 24px; margin-bottom: 8px;">🎨</div>
-        <div style="color: #ffcc00; font-weight: bold; font-size: 14px; margin-bottom: 4px; font-family: monospace;">Frontend</div>
-        <div style="color: #8b9bb4; font-size: 12px;">HTML / CSS / JS<br>Chart.js</div>
-      </td>
-      <td align="center" style="background: rgba(0, 212, 255, 0.05); border: 1px solid #00d4ff; border-radius: 10px; padding: 15px; width: 20%; box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);">
-        <div style="font-size: 24px; margin-bottom: 8px;">🔐</div>
-        <div style="color: #00d4ff; font-weight: bold; font-size: 14px; margin-bottom: 4px; font-family: monospace;">Security</div>
-        <div style="color: #8b9bb4; font-size: 12px;">JWT Auth<br>BCrypt</div>
-      </td>
-    </tr>
-  </table>
-</div>
+<br>
+
+`text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  [ CORE ENGINE ]      [ REAL-TIME ]       [ DATABASE ]      [ SECURITY ]    │
+│                                                                             │
+│   ⚙️ C# 12 / .NET 8    ⚡ SignalR           🗄️ SQLite          🔐 JWT Auth     │
+│   🚀 ASP.NET Core      📡 WebSockets        📦 EF Core         🛡️ BCrypt       │
+│   🎨 Vanilla JS        📊 Chart.js          📝 Serilog         👥 RBAC         │
+└─────────────────────────────────────────────────────────────────────────────┘
 
 *Built with C#, ASP.NET Core, SignalR, and Vanilla JavaScript.*
 
